@@ -19,6 +19,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.weather_app.ui.theme.Weather_AppTheme
+import com.weather_app.weather_forecast.util.permission.checkForLocationPermission
 
 
 class MainActivity : ComponentActivity() {
@@ -31,11 +32,15 @@ class MainActivity : ComponentActivity() {
         ) { permissions ->
             when {
                 permissions.getOrDefault(Manifest.permission.ACCESS_FINE_LOCATION, false) -> {
-
+                    // Fine location granted
                 }
 
                 permissions.getOrDefault(Manifest.permission.ACCESS_COARSE_LOCATION, false) -> {
-                    // Coarse LOCATION ACCESS GRANTED
+                    // Coarse location granted
+                }
+                else -> {
+                    // TODO("Show a dialogue where it asks to grant permission")
+
                 }
             }
         }
@@ -47,8 +52,9 @@ class MainActivity : ComponentActivity() {
                         Manifest.permission.ACCESS_FINE_LOCATION,
                         Manifest.permission.ACCESS_COARSE_LOCATION
                     )
-                )
-        })
+                )},
+            activity = this
+        )
         enableEdgeToEdge()
         setContent {
             Weather_AppTheme {
@@ -62,62 +68,7 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-    private fun showInContextUI(
-        context: Context,
-        message: String,
-        launchPermissionRequest: () -> Unit
-    ) {
-        AlertDialog.Builder(context)
-            .setTitle("Permission Required")
-            .setMessage(message)
-            .setPositiveButton("OK") { dialog, _ ->
-                dialog.dismiss()
-                // Request the permissions again after showing the rationale
-                launchPermissionRequest()
-            }
-            .setNegativeButton("Cancel") { dialog, _ ->
-                dialog.dismiss()
-            }
-            .show()
-    }
 
-    private fun checkForLocationPermission(context: Context, launchPermissionRequest: () -> Unit) {
-        when {
-            ContextCompat.checkSelfPermission(
-                context,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) == PackageManager.PERMISSION_GRANTED &&
-                    ContextCompat.checkSelfPermission(
-                        context,
-                        Manifest.permission.ACCESS_COARSE_LOCATION
-                    ) == PackageManager.PERMISSION_GRANTED -> {
-                // Both permissions are granted
-            }
-
-            ActivityCompat.shouldShowRequestPermissionRationale(
-                this, Manifest.permission.ACCESS_FINE_LOCATION
-            ) || ActivityCompat.shouldShowRequestPermissionRationale(
-                this, Manifest.permission.ACCESS_COARSE_LOCATION
-            ) -> {
-                // In an educational UI, explain to the user why your app requires this
-                // permission for a specific feature to behave as expected, and what
-                // features are disabled if it's declined. In this UI, include a
-                // "cancel" or "no thanks" button that lets the user continue
-                // using your app without granting the permission.
-                showInContextUI(
-                    context = context,
-                    message = "Please grant location access to load weather forecast",
-                    launchPermissionRequest = {
-                        launchPermissionRequest()
-                    }
-                )
-            }
-            else -> {
-                // If user has not given permission yet
-                launchPermissionRequest()
-            }
-        }
-    }
 }
 
 @Composable
