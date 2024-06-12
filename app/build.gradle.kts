@@ -2,8 +2,8 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
     id("kotlin-kapt")
-    id("com.google.dagger.hilt.android") version "2.44" apply false
-
+    id("com.google.dagger.hilt.android") version "2.49" apply false
+    id ("dagger.hilt.android.plugin")
 
     kotlin("plugin.serialization") version "2.0.0"
 }
@@ -64,6 +64,7 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    implementation(libs.play.services.location)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -86,8 +87,13 @@ dependencies {
 
 
     // Dagger Hilt
-    implementation(libs.hilt.android)
-    kapt(libs.hilt.compiler)
+    implementation ("com.google.dagger:hilt-android:2.49")
+    kapt ("com.google.dagger:hilt-android-compiler:2.49")
+
+
+    implementation ("androidx.hilt:hilt-navigation-compose:1.0.0")
+
+
 
 
 }
