@@ -46,8 +46,14 @@ class MainActivity : ComponentActivity() {
         val mainViewModel: MainViewModel by viewModels()
         locationPermissionRequest = registerForActivityResult(
             ActivityResultContracts.RequestMultiplePermissions()
-        ) {
-//            mainViewModel.getLastKnownLocation()
+        ) { permissions ->
+            if (permissions[Manifest.permission.ACCESS_FINE_LOCATION] == true ||
+                permissions[Manifest.permission.ACCESS_COARSE_LOCATION] == true) {
+                mainViewModel.getLastKnownLocation()
+            } else {
+                // Handle permission denial here
+                Toast.makeText(context, "Location permission denied", Toast.LENGTH_SHORT).show()
+            }
         }
         checkForLocationPermission(
             context = context,
