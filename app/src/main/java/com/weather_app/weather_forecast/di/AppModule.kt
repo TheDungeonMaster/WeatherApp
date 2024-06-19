@@ -3,6 +3,8 @@ package com.weather_app.weather_forecast.di
 
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import com.weather_app.weather_forecast.data.remote.WeatherAPI
+import com.weather_app.weather_forecast.data.repository.WeatherRepositoryImpl
+import com.weather_app.weather_forecast.domain.repository.WeatherRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -29,5 +31,11 @@ object AppModule {
             .build()
             .create()
     }
+
+    @Provides
+    fun provideWeatherRepository(
+        weatherRepositoryImpl: WeatherRepositoryImpl
+    ): WeatherRepository = weatherRepositoryImpl
+
 
 }

@@ -48,7 +48,8 @@ class MainActivity : ComponentActivity() {
             ActivityResultContracts.RequestMultiplePermissions()
         ) { permissions ->
             if (permissions[Manifest.permission.ACCESS_FINE_LOCATION] == true ||
-                permissions[Manifest.permission.ACCESS_COARSE_LOCATION] == true) {
+                permissions[Manifest.permission.ACCESS_COARSE_LOCATION] == true
+            ) {
                 mainViewModel.getLastKnownLocation()
             } else {
                 // Handle permission denial here
@@ -72,8 +73,12 @@ class MainActivity : ComponentActivity() {
             Weather_AppTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     val location = mainViewModel.curLocation.collectAsState()
+                    val temp = mainViewModel.temp.collectAsState()
+                    val wind = mainViewModel.wind.collectAsState()
                     Greeting(
-                        name = location.value,
+                        name = "${location.value.latitude.toString()} and ${location.value.longitude.toString()}",
+                        temp = temp.value.toString(),
+                        wind = wind.value.toString(),
                         modifier = Modifier.padding(innerPadding)
                     )
                 }
@@ -85,20 +90,22 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
+fun Greeting(name: String, temp: String, wind: String, modifier: Modifier = Modifier) {
     Text(
-        text = "Hello $name!",
+        text = "Hello $name!" +
+                "\n TEMP = $temp" +
+                "\n WIND = $wind",
         modifier = modifier
     )
 }
 
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    Weather_AppTheme {
-        Greeting("Android")
-    }
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun GreetingPreview() {
+//    Weather_AppTheme {
+//        Greeting("Android")
+//    }
+//}
 
 
 
