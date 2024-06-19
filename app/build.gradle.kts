@@ -80,6 +80,8 @@ dependencies {
 
     // Kotlin Serialization
     implementation(libs.kotlinx.serialization.json)
+    implementation(libs.retrofit2.kotlinx.serialization.converter.v100)
+    implementation(libs.okhttp)
 
     //Compose
     implementation(libs.androidx.navigation.compose)

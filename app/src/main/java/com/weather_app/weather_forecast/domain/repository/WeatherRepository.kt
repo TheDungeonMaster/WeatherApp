@@ -4,6 +4,6 @@ import com.weather_app.weather_forecast.domain.data_classes.WeatherData
 
 interface WeatherRepository {
 
-    suspend fun getWeatherData() : WeatherData
+    suspend fun getWeatherData(latitude: Int,  longitude: Int) : WeatherData
 
 }
