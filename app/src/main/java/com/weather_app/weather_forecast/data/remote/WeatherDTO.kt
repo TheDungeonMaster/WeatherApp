@@ -9,6 +9,7 @@ data class WeatherDTO(
 
     @SerialName("current") val currentWeatherDTO: CurrentWeatherDTO,
     @SerialName("hourly") val hourlyWeatherDTO: HourlyWeatherDTO,
+    @SerialName("daily") val dailyWeatherDTO: DailyWeatherDTO
 )
 
 
@@ -40,4 +41,18 @@ data class CurrentWeatherDTO(
     @SerialName("wind_speed_10m") val windSpeed: Double,
     @SerialName("wind_gusts_10m") val windGusts: Double,
 
+)
+
+@Serializable
+data class DailyWeatherDTO (
+    @SerialName("time") val time: List<String>,
+    @SerialName("weather_code") val weatherCode: List<Double>,
+    @SerialName("temperature_2m_max") val maxTemperature: List<Double>,
+    @SerialName("temperature_2m_min") val minTemperature: List<Double>,
+    @SerialName("sunrise") val sunrise: List<String>,
+    @SerialName("sunset") val sunset: List<String>,
+    @SerialName("uv_index_max") val uvIndex: List<Double>,
+    @SerialName("wind_speed_10m_max") val windSpeed: List<Double>,
+    @SerialName("wind_gusts_10m_max") val windGustsSpeed: List<Double>,
+    @SerialName("wind_direction_10m_dominant") val windDirection: List<String>,
 )

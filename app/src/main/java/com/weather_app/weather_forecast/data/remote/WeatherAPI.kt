@@ -1,5 +1,6 @@
 package com.weather_app.weather_forecast.data.remote
 
+import com.weather_app.weather_forecast.domain.data_classes.WeatherData
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -10,5 +11,5 @@ interface WeatherAPI {
     suspend fun getWeatherData(
         @Query("latitude") latitude: Double,
         @Query("longitude") longitude: Double
-    ): WeatherDTO
+    ): WeatherData
 }
