@@ -11,5 +11,5 @@ interface WeatherAPI {
     suspend fun getWeatherData(
         @Query("latitude") latitude: Double,
         @Query("longitude") longitude: Double
-    ): WeatherData
+    ): WeatherDTO
 }

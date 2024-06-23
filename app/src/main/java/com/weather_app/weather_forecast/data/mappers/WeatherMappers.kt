@@ -3,9 +3,11 @@ package com.weather_app.weather_forecast.data.mappers
 import com.weather_app.weather_forecast.data.remote.CurrentWeatherDTO
 import com.weather_app.weather_forecast.data.remote.DailyWeatherDTO
 import com.weather_app.weather_forecast.data.remote.HourlyWeatherDTO
+import com.weather_app.weather_forecast.data.remote.WeatherDTO
 import com.weather_app.weather_forecast.domain.data_classes.CurrentWeatherData
 import com.weather_app.weather_forecast.domain.data_classes.DailyWeatherData
 import com.weather_app.weather_forecast.domain.data_classes.HourlyWeatherData
+import com.weather_app.weather_forecast.domain.data_classes.WeatherData
 
 
 fun CurrentWeatherDTO.toCurrentWeatherData(): CurrentWeatherData {
@@ -66,3 +68,11 @@ private data class IndexedHourlyWeatherData(
     val index: Int,
     val data: HourlyWeatherData
 )
+
+fun WeatherDTO.toWeatherData() : WeatherData {
+    return WeatherData(
+        currentWeatherData = currentWeatherDTO.toCurrentWeatherData(),
+        hourlyWeatherData = hourlyWeatherDTO.toHourlyWeatherData(),
+        dailyWeatherData = dailyWeatherDTO.toDailyWeatherData()
+    )
+}

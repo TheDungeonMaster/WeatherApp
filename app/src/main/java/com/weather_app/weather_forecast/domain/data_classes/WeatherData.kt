@@ -44,5 +44,5 @@ data class DailyWeatherData (
     val uvIndex: Double,
     val windSpeed: Double,
     val windGustsSpeed: Double,
-    val windDirection: String,
+    val windDirection: Int,
 )

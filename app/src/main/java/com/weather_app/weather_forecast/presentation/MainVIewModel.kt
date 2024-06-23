@@ -40,6 +40,7 @@ class MainViewModel @OptIn(ExperimentalCoroutinesApi::class)
     fun getLastKnownLocation() {
         viewModelScope.launch {
             val location = locationClient.getCurrentLocation()
+            Log.d("TAG", "${location?.longitude ?: "NULL"}")
             if (location != null) {
                 curLocation.update {
                     Location(
@@ -49,7 +50,7 @@ class MainViewModel @OptIn(ExperimentalCoroutinesApi::class)
                 }
                 Log.d("TAG","LOCATION FETCHED", )
 
-            }else {
+            } else {
                 curLocation.value.latitude = null
                 curLocation.value.longitude = null
                 Log.d("TAG","LOCATION NOT FETCHED", )
@@ -62,18 +63,19 @@ class MainViewModel @OptIn(ExperimentalCoroutinesApi::class)
 
     private fun getWeatherData() {
         viewModelScope.launch {
-            var lat = curLocation.value.latitude
-            var lon = curLocation.value.longitude
+            val lat = curLocation.value.latitude
+            val lon = curLocation.value.longitude
 
             if (lat != null && lon != null) {
                 val data = weatherRepository.getWeatherData(lat, lon)
-                if (data != null) {
-                    temp.value = data.currentWeatherDTO.temperature.toInt()
-                    wind.value = data.currentWeatherDTO.windSpeed.toInt()
-                    Log.d("TAG", "CURRENT_ ${temp.value}")
-                }
+
+                temp.value = data.data?.currentWeatherData?.temperature?.toInt() ?: 0
+                wind.value = data.data?.currentWeatherData?.windSpeed?.toInt() ?: 0
+
+
+                Log.d("TAG", "CURRENT_ ${temp.value}")
             } else {
-                Log.d("VM", "could not get location")
+                Log.d("VM", "could not get Data")
             }
         }
     }

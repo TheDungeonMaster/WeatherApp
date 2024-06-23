@@ -54,5 +54,5 @@ data class DailyWeatherDTO (
     @SerialName("uv_index_max") val uvIndex: List<Double>,
     @SerialName("wind_speed_10m_max") val windSpeed: List<Double>,
     @SerialName("wind_gusts_10m_max") val windGustsSpeed: List<Double>,
-    @SerialName("wind_direction_10m_dominant") val windDirection: List<String>,
+    @SerialName("wind_direction_10m_dominant") val windDirection: List<Int>,
 )

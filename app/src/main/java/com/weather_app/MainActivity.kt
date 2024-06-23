@@ -12,8 +12,10 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Button
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -79,7 +81,8 @@ class MainActivity : ComponentActivity() {
                         name = "${location.value.latitude.toString()} and ${location.value.longitude.toString()}",
                         temp = temp.value.toString(),
                         wind = wind.value.toString(),
-                        modifier = Modifier.padding(innerPadding)
+                        modifier = Modifier.padding(innerPadding),
+                        onButtonClick = {mainViewModel.getLastKnownLocation()}
                     )
                 }
             }
@@ -90,13 +93,18 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun Greeting(name: String, temp: String, wind: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!" +
-                "\n TEMP = $temp" +
-                "\n WIND = $wind",
-        modifier = modifier
-    )
+fun Greeting(name: String, temp: String, wind: String, modifier: Modifier = Modifier, onButtonClick :() -> Unit) {
+    Column {
+        Text(
+            text = "Hello $name!" +
+                    "\n TEMP = $temp" +
+                    "\n WIND = $wind",
+            modifier = modifier
+        )
+        Button(onClick = {onButtonClick()}) {
+
+        }
+    }
 }
 
 //@Preview(showBackground = true)
